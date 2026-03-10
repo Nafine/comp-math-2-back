@@ -2,7 +2,6 @@ package model
 
 import "comp-math-2/internal/derivate"
 
-type Function func(float64) float64
 type Solution struct {
 	X          float64
 	Y          float64
@@ -10,10 +9,22 @@ type Solution struct {
 }
 
 type NonlinearEquation struct {
-	F   Function
+	F   func(float64) float64
 	Eps float64
 	A   float64
 	B   float64
+}
+
+type NonlinearSystem struct {
+	F1  func(Coordinates) float64
+	F2  func(Coordinates) float64
+	X0  float64
+	Y0  float64
+	Eps float64
+}
+
+type Coordinates struct {
+	X, Y float64
 }
 
 func (eq NonlinearEquation) RootExists() bool {
