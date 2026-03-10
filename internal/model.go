@@ -1,7 +1,5 @@
 package model
 
-import "comp-math-2/internal/derivate"
-
 type Solution struct {
 	X          float64
 	Y          float64
@@ -27,6 +25,6 @@ type Coordinates struct {
 	X, Y float64
 }
 
-func (eq NonlinearEquation) RootExists() bool {
-	return eq.F(eq.A)*eq.F(eq.B) < 0 && derivate.DerivAt(eq.F, eq.A)*derivate.DerivAt(eq.F, eq.B) > 0
-}
+//func (eq NonlinearEquation) RootExists() bool {
+//	return eq.F(eq.A)*eq.F(eq.B) < 0 && derivate.DerivAt(eq.F, eq.A)*derivate.DerivAt(eq.F, eq.B) > 0
+//}
