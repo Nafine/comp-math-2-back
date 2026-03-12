@@ -9,10 +9,10 @@ import (
 )
 
 type SolveRequest struct {
-	Type       string  `json:"type" binding:"required"`
-	EquationId int     `json:"equationId"`
-	Method     string  `json:"method" binding:"required"`
-	Tolerance  float64 `json:"tolerance" binding:"required"`
+	Type       string   `json:"type" binding:"required"`
+	EquationId int      `json:"equationId"`
+	Method     string   `json:"method" binding:"required"`
+	Tolerance  *float64 `json:"tolerance" binding:"required"`
 
 	A *float64 `json:"a,omitempty"`
 	B *float64 `json:"b,omitempty"`
@@ -23,7 +23,9 @@ type SolveRequest struct {
 
 type SolveResponse struct {
 	X              float64  `json:"x"`
-	Y              *float64 `json:"y"`
+	Y              *float64 `json:"y,omitempty"`
+	Dx             *float64 `json:"dx,omitempty"`
+	Dy             *float64 `json:"dy,omitempty"`
 	IterationCount int      `json:"iterationCount"`
 }
 
@@ -47,7 +49,7 @@ func Solve() gin.HandlerFunc {
 				F:   numeric.GetFunction(req.EquationId),
 				A:   *req.A,
 				B:   *req.B,
-				Eps: req.Tolerance,
+				Eps: *req.Tolerance,
 			}
 
 			solution, err := algo.SolveSingle(req.Method, eq)
@@ -76,7 +78,7 @@ func Solve() gin.HandlerFunc {
 					X: *req.X0,
 					Y: *req.Y0,
 				},
-				Eps: req.Tolerance,
+				Eps: *req.Tolerance,
 			}
 
 			solution, err := algo.SolveSystem(eq)
@@ -88,6 +90,8 @@ func Solve() gin.HandlerFunc {
 			c.JSON(http.StatusOK, SolveResponse{
 				X:              solution.X,
 				Y:              &solution.Y,
+				Dx:             &solution.Dx,
+				Dy:             &solution.Dy,
 				IterationCount: solution.Iterations,
 			})
 

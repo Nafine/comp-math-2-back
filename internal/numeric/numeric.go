@@ -8,6 +8,8 @@ type Solution struct {
 type SystemSolution struct {
 	X          float64
 	Y          float64
+	Dx         float64
+	Dy         float64
 	Iterations int
 }
 

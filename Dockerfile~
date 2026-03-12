@@ -7,7 +7,7 @@ RUN go mod download
 
 COPY . ./
 
-RUN CGO_ENABLED=0 GOOS=${TARGETOS:-linux} GOARCH=${TARGETARCH} go build -a -o server ./cmd/comp-math-2/comp-math-2.go
+RUN go build -v -o server ./cmd/comp-math-2/comp-math-2.go
 
 FROM alpine:3.23
 

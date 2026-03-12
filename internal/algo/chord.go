@@ -2,6 +2,7 @@ package algo
 
 import (
 	"comp-math-2/internal/numeric"
+	"fmt"
 	"math"
 )
 
@@ -10,13 +11,12 @@ func SolveChord(eq numeric.NonlinearEquation) (numeric.Solution, error) {
 	a := eq.A
 	b := eq.B
 	eps := eq.Eps
-	iterations := 0
 
 	x := a - (b-a)*f(a)/(f(b)-f(a))
 
 	lastX := x
 
-	for ; iterations < 10_000; iterations++ {
+	for i := 1; i <= 10_000; i++ {
 		if f(a)*f(b) < 0 {
 			b = x
 		} else {
@@ -26,14 +26,14 @@ func SolveChord(eq numeric.NonlinearEquation) (numeric.Solution, error) {
 		x = a - (b-a)*f(a)/(f(b)-f(a))
 
 		if math.Abs(f(x)) <= eps && math.Abs(x-lastX) <= eps {
-			break
+			return numeric.Solution{
+				X:          x,
+				Iterations: i,
+			}, nil
 		}
 
 		lastX = x
 	}
 
-	return numeric.Solution{
-		X:          x,
-		Iterations: iterations,
-	}, nil
+	return numeric.Solution{}, fmt.Errorf("maximum number of iterations reached")
 }

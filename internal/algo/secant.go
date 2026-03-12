@@ -2,6 +2,7 @@ package algo
 
 import (
 	"comp-math-2/internal/numeric"
+	"fmt"
 	"math"
 )
 
@@ -10,26 +11,24 @@ func SolveSecant(eq numeric.NonlinearEquation) (numeric.Solution, error) {
 	a := eq.A
 	b := eq.B
 	eps := eq.Eps
-	iterations := 0
 
 	prevX := (b + a) / 2.0
 
 	x := prevX + eps
 
-	for {
-		iterations++
+	for i := 1; i <= 10_000; i++ {
 		temp := x
 		x = x - (x-prevX)/(f(x)-f(prevX))*f(x)
 
 		if math.Abs(x-prevX) <= eps {
-			break
+			return numeric.Solution{
+				X:          x,
+				Iterations: i,
+			}, nil
 		}
 
 		prevX = temp
 	}
 
-	return numeric.Solution{
-		X:          x,
-		Iterations: iterations,
-	}, nil
+	return numeric.Solution{}, fmt.Errorf("maximum number of iterations reached")
 }

@@ -32,25 +32,17 @@ func SolveSimpleIteration(eq numeric.NonlinearEquation) (numeric.Solution, error
 		}
 	}
 
-	iterations := 0
-
-	for {
-		iterations++
-
-		if iterations == maxIters {
-			return numeric.Solution{}, fmt.Errorf("достигнуто %d итераций и ответ вы уже не получите", iterations)
-		}
-
+	for i := 1; i <= maxIters; i++ {
 		xPrev := x
 		x = phi(x)
 
 		if math.Abs(x-xPrev) <= eq.Eps {
-			break
+			return numeric.Solution{
+				X:          x,
+				Iterations: i,
+			}, nil
 		}
 	}
 
-	return numeric.Solution{
-		X:          x,
-		Iterations: iterations,
-	}, nil
+	return numeric.Solution{}, fmt.Errorf("maximum number of iterations reached")
 }
