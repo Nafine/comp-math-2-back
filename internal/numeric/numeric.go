@@ -2,6 +2,7 @@ package numeric
 
 type Solution struct {
 	X          float64
+	Y          float64
 	Iterations int
 }
 

@@ -23,6 +23,7 @@ func SolveSecant(eq numeric.NonlinearEquation) (numeric.Solution, error) {
 		if math.Abs(x-prevX) <= eps {
 			return numeric.Solution{
 				X:          x,
+				Y:          f(x),
 				Iterations: i,
 			}, nil
 		}

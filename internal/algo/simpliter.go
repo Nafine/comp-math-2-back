@@ -39,6 +39,7 @@ func SolveSimpleIteration(eq numeric.NonlinearEquation) (numeric.Solution, error
 		if math.Abs(x-xPrev) <= eq.Eps {
 			return numeric.Solution{
 				X:          x,
+				Y:          f(x),
 				Iterations: i,
 			}, nil
 		}

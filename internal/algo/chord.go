@@ -28,6 +28,7 @@ func SolveChord(eq numeric.NonlinearEquation) (numeric.Solution, error) {
 		if math.Abs(f(x)) <= eps && math.Abs(x-lastX) <= eps {
 			return numeric.Solution{
 				X:          x,
+				Y:          f(x),
 				Iterations: i,
 			}, nil
 		}

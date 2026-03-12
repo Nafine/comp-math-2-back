@@ -23,7 +23,7 @@ type SolveRequest struct {
 
 type SolveResponse struct {
 	X              float64  `json:"x"`
-	Y              *float64 `json:"y,omitempty"`
+	Y              float64  `json:"y"`
 	Dx             *float64 `json:"dx,omitempty"`
 	Dy             *float64 `json:"dy,omitempty"`
 	IterationCount int      `json:"iterationCount"`
@@ -60,6 +60,7 @@ func Solve() gin.HandlerFunc {
 
 			c.JSON(http.StatusOK, SolveResponse{
 				X:              solution.X,
+				Y:              solution.Y,
 				IterationCount: solution.Iterations,
 			})
 
@@ -89,7 +90,7 @@ func Solve() gin.HandlerFunc {
 
 			c.JSON(http.StatusOK, SolveResponse{
 				X:              solution.X,
-				Y:              &solution.Y,
+				Y:              solution.Y,
 				Dx:             &solution.Dx,
 				Dy:             &solution.Dy,
 				IterationCount: solution.Iterations,
